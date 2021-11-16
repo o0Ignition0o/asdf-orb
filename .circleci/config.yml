@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build-base:
+  build_base:
     docker:
       - image: docker:20.10
     steps:
@@ -29,7 +29,7 @@ jobs:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
           paths:
             - /caches/asdf-base.tar
-  asdf-install:
+  asdf_install:
     docker:
       - image: jeremylempereur/asdf
     steps:
@@ -49,7 +49,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - build-base
-      - asdf-install
+      - build_base
+      - asdf_install
           requires:
-            - build-base
+            - build_base
