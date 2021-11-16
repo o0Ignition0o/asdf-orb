@@ -37,10 +37,10 @@ jobs:
       - restore_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
       - run:
-        command: |
-          source ~/.bashrc
-          /asdf-install-plugins
-          /asdf-install-versions
+          command: |
+            source ~/.bashrc
+            /asdf-install-plugins
+            /asdf-install-versions
 
       - save_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
