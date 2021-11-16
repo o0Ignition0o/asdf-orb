@@ -42,7 +42,7 @@ jobs:
       - run:
           command: |
             pwd
-            ls -al ..
+            ls -al /root/.asdf/bin
             echo 'export PATH=/root/.asdf/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
             echo $PATH
