@@ -54,6 +54,6 @@ workflows:
   build:
     jobs:
       - build_base
-      - asdf_install
-        requires:
-        - build_base
+      - asdf_install:
+          requires:
+            - build_base
