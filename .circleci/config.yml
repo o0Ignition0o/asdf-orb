@@ -41,6 +41,8 @@ jobs:
 
       - run:
           command: |
+            printenv
+            cat ~/.bashrc
             asdf-install-plugins
             asdf-install-versions
 
