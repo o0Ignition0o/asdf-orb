@@ -4,6 +4,13 @@ if [ ! -f .tool-versions ]; then
   exit 1
 fi
 
+ASDF = $(which asdf || echo "/root/.asdf/bin/asdf")
+if [ -z "$ASDF" ]; then
+  echo "asdf not found!"
+  exit 1
+fi
+echo "using asdf located in $ASDF"
+
 cat .tool-versions | while read -r version; do
   if [ -z "$version" ]; then
     continue
@@ -13,10 +20,10 @@ cat .tool-versions | while read -r version; do
   ex=$?
   if [ $ex -eq 0 ]; then
     echo "$version is already installed. Reshimming"
-    asdf reshim $version
+    $ASDF reshim $version
   else
     echo "$version is not installed. Trying to install..."
-    asdf install $version
+    $ASDF install $version
     ex=$?
     if [ $ex -ne 0 ]; then
       echo "Error installing $version"
