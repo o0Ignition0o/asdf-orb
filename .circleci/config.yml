@@ -9,33 +9,40 @@ jobs:
   build_base:
     docker:
       - image: docker:20.10
-
     steps:
-      - checkout
-      - setup_remote_docker
-      - restore_cache:
-          key: v1-docker-base-cache-{{ checksum "Dockerfile" }}-{{ checksum "asdf-install-plugins" }}-{{ checksum "asdf-install-versions" }}
-      - run:
-          command: |
-            set +o pipefail
-            docker load -i /caches/asdf.tar | true
-      - run:
-          command: |
-            docker build --cache-from=asdf -t asdf .
-      - run:
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/asdf.tar asdf
-      - run:
-          command: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker tag asdf jeremylempereur/asdf:latest
-            docker push jeremylempereur/asdf:latest
+      - unless:
+          condition: << pipeline.parameters.rebuild-image >>
+          steps:
+            run: echo "not rebuilding image"
+      - when:
+          condition: << pipeline.parameters.rebuild-image >>
+          steps:
+            - checkout
+            - setup_remote_docker
+            - restore_cache:
+                key: v1-docker-base-cache-{{ checksum "Dockerfile" }}-{{ checksum "asdf-install-plugins" }}-{{ checksum "asdf-install-versions" }}
+            - run:
+                command: |
+                  set +o pipefail
+                  docker load -i /caches/asdf.tar | true
+            - run:
+                command: |
+                  docker build --cache-from=asdf -t asdf .
+            - run:
+                command: |
+                  mkdir -p /caches
+                  docker save -o /caches/asdf.tar asdf
+            - run:
+                command: |
+                  docker login -u $DOCKER_USER -p $DOCKER_PASS
+                  docker tag asdf jeremylempereur/asdf:latest
+                  docker push jeremylempereur/asdf:latest
 
-      - save_cache:
-          key: v1-docker-base-cache-{{ checksum "Dockerfile" }}-{{ checksum "asdf-install-plugins" }}-{{ checksum "asdf-install-versions" }}
-          paths:
-            - /caches/asdf-base.tar
+            - save_cache:
+                key: v1-docker-base-cache-{{ checksum "Dockerfile" }}-{{ checksum "asdf-install-plugins" }}-{{ checksum "asdf-install-versions" }}
+                paths:
+                  - /caches/asdf-base.tar
+
   asdf_install:
     docker:
       - image: jeremylempereur/asdf:latest
@@ -58,16 +65,12 @@ jobs:
           paths:
             - "~/.asdf/plugins"
             - "~/.asdf/installs"
+
 workflows:
   version: 2
-  when: << pipeline.parameters.rebuild-image >>
-    rebuild:
-      jobs:
-        - build_base
-        - asdf_install:
-            requires:
-              - build_base
-  unless: << pipeline.parameters.rebuild-image >>
-    install:
-      jobs:
-        - asdf_install
+  build:
+    jobs:
+      - build_base
+      - asdf_install:
+          requires:
+            - build_base
