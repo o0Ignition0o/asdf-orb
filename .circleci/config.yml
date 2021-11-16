@@ -19,6 +19,11 @@ jobs:
           command: |
             mkdir -p /caches
             docker save -o /caches/asdf.tar asdf
+      - run:
+          command: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker image tag jeremylempereur/asdf:latest asdf:latest
+          docker push jeremylempereur/asdf:latest
 
       - save_cache:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
@@ -26,9 +31,7 @@ jobs:
             - /caches/asdf-base.tar
   asdf-install:
     docker:
-      - image: asdf
-        environment:
-          BASH_ENV: "~/.bashrc"
+      - image: jeremylempereur/asdf
     steps:
       - checkout
       - restore_cache:

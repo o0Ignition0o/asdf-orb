@@ -13,5 +13,8 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
 RUN echo '. ~/.asdf/asdf.sh\n' >> ~/.bashrc &&\
     echo '. ~/.asdf/completions/asdf.bash\n' >> ~/.bashrc
 
+COPY asdf-install-plugins /
+COPY asdf-install-versions /
+
 # This is required to source bashrc correctly
 SHELL ["/bin/bash", "-i", "-c"]
