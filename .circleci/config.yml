@@ -33,7 +33,6 @@ jobs:
     docker:
       - image: jeremylempereur/asdf:latest
         environment:
-          shell: /bin/bash
           BASH_ENV: "/root/.bashrc"
     steps:
       - checkout
@@ -42,8 +41,8 @@ jobs:
 
       - run:
           command: |
-            echo "$SHELL"
-            source $BASH_ENV
+            printenv
+            echo $PATH
             asdf --version
             asdf-install-plugins
             asdf-install-versions
