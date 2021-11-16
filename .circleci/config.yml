@@ -51,3 +51,5 @@ workflows:
     jobs:
       - build-base
       - asdf-install
+          requires:
+            - build-base
