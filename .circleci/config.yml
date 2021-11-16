@@ -1,8 +1,35 @@
 version: 2.1
 jobs:
-  build:
+  build-base:
     docker:
-      - image: lisinge/asdf:latest
+      - image: docker:20.10
+    steps:
+      - checkout
+      - setup_remote_docker
+    - restore_cache:
+        keys:
+          - v1-docker-base-cache-{{ checksum "Dockerfile" }}
+        paths:
+          - /caches/asdf-base.tar
+        - run:
+          command: |
+            set +o pipefail
+            docker load -i /caches/asdf.tar | true
+        - run:
+          command: |
+            docker build --cache-from=asdf -t asdf .
+        - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/asdf.tar asdf
+    - save_cache:
+        key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
+        paths:
+          - /caches/asdf-base.tar
+  asdf_install:
+    docker:
+      - image: asdf
         environment:
           BASH_ENV: "~/.bashrc"
     steps:
