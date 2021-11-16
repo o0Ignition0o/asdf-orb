@@ -32,6 +32,8 @@ jobs:
   asdf_install:
     docker:
       - image: jeremylempereur/asdf:latest
+        environment:
+          BASH_ENV: "~/.bashrc"
     steps:
       - checkout
       - restore_cache:
