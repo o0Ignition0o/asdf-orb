@@ -1,11 +1,12 @@
 version: 2.1
 jobs:
   build_base:
+    when:
+      condition: << parameters.rebuild >>
     docker:
       - image: docker:20.10
+
     steps:
-      - when:
-          condition: << parameters.rebuild >>
       - checkout
       - setup_remote_docker
       - restore_cache:
