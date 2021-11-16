@@ -4,8 +4,8 @@ if [ ! -f .tool-versions ]; then
   exit 1
 fi
 
-ASDF = $(which asdf || echo "/root/.asdf/bin/asdf")
-if [ -z "$ASDF" ]; then
+ASDF = "/root/.asdf/bin/asdf"
+if [ -f "$ASDF" ]; then
   echo "asdf not found!"
   exit 1
 fi
