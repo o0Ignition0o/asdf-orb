@@ -42,7 +42,7 @@ jobs:
       - run:
           command: |
             source ~/.bashrc
-            printenv
+            echo $PATH
             asdf-install-plugins
             asdf-install-versions
 
