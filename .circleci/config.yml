@@ -8,9 +8,6 @@ jobs:
       - setup_remote_docker
       - restore_cache:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
-          paths:
-            - /caches/asdf-base.tar
-
       - run:
           command: |
             set +o pipefail
@@ -25,8 +22,7 @@ jobs:
 
       - save_cache:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
-          paths:
-            - /caches/asdf-base.tar
+          path: /caches/asdf-base.tar
   asdf_install:
     docker:
       - image: asdf
@@ -35,8 +31,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - v1-tools-cache-{{ checksum ".tool-versions" }}
+          key: v1-tools-cache-{{ checksum ".tool-versions" }}
 
       - run: asdf-install-plugins
       - run: asdf-install-versions
