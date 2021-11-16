@@ -33,8 +33,6 @@ jobs:
     docker:
       - image: jeremylempereur/asdf:latest
         environment:
-          ASDF: $HOME/.asdf
-          PATH: $ASDF/bin:$PATH
           shell: /bin/bash
     steps:
       - checkout
@@ -43,8 +41,8 @@ jobs:
 
       - run:
           command: |
-            echo $ASDF
-            echo $PATH
+            echo 'export PATH=/$HOME/.asdf/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
             asdf --version
             asdf-install-plugins
             asdf-install-versions
