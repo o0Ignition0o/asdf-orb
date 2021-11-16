@@ -42,6 +42,7 @@ jobs:
 
       - run:
           command: |
+            source /root/.bashrc
             echo $PATH
             asdf --version
             asdf-install-plugins
