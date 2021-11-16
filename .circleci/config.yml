@@ -33,6 +33,8 @@ jobs:
     docker:
       - image: jeremylempereur/asdf:latest
         environment:
+          ASDF: $HOME/.asdf
+          PATH: $ASDF/bin:$PATH
           shell: /bin/bash -eo pipefail -l
           BASH_ENV: "/root/.bashrc"
     steps:
@@ -42,8 +44,6 @@ jobs:
 
       - run:
           command: |
-            source /root/.bashrc
-            echo $PATH
             asdf --version
             asdf-install-plugins
             asdf-install-versions
