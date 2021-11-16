@@ -22,7 +22,8 @@ jobs:
 
       - save_cache:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
-          path: /caches/asdf-base.tar
+          paths:
+            - /caches/asdf-base.tar
   asdf-install:
     docker:
       - image: asdf
