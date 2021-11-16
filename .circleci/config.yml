@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build-base:
+  build:
     docker:
       - image: docker:20.10
     steps:
@@ -47,9 +47,3 @@ jobs:
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
-workflows:
-  version: 2
-  build:
-    jobs:
-      - build-base
-      - asdf-install
