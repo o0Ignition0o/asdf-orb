@@ -41,8 +41,11 @@ jobs:
 
       - run:
           command: |
-            . ~/.bashrc
+            echo 'export PATH=/root/.asdf/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
             echo $PATH
+            echo $BASH_ENV
+            cat $BASH_ENV
             asdf-install-plugins
             asdf-install-versions
 
