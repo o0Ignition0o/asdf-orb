@@ -1,8 +1,6 @@
 version: 2.1
 jobs:
   build_base:
-    when:
-      condition: << parameters.rebuild >>
     docker:
       - image: docker:20.10
 
@@ -56,10 +54,14 @@ jobs:
             - "~/.asdf/installs"
 workflows:
   version: 2
-  build:
+  rebuild:
+    when: << parameters.rebuild >>
     jobs:
-      - build_base:
-          rebuild: false
+      - build_base
       - asdf_install:
           requires:
             - build_base
+  build:
+    unless: << parameters.rebuild >>
+    jobs:
+      - asdf_install
