@@ -1,4 +1,8 @@
 version: 2.1
+  parameters:
+    rebuild-image:
+      type: boolean
+      default: false
 jobs:
   build_base:
     docker:
@@ -53,19 +57,15 @@ jobs:
             - "~/.asdf/plugins"
             - "~/.asdf/installs"
 workflows:
-  parameters:
-    rebuild:
-      type: boolean
-      default: false
   version: 2
   rebuild:
-    when: << parameters.rebuild >>
+    when: << parameters.rebuild-image >>
     jobs:
       - build_base
       - asdf_install:
           requires:
             - build_base
   build:
-    unless: << parameters.rebuild >>
+    unless: << parameters.rebuild-image >>
     jobs:
       - asdf_install
