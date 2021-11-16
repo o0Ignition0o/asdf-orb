@@ -1,8 +1,8 @@
 version: 2.1
-  parameters:
-    rebuild-image:
-      type: boolean
-      default: false
+parameters:
+  rebuild-image:
+    type: boolean
+    default: false
 jobs:
   build_base:
     docker:
