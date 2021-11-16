@@ -61,13 +61,13 @@ jobs:
 workflows:
   version: 2
   when: << pipeline.parameters.rebuild-image >>
-  rebuild:
-    jobs:
-      - build_base
-      - asdf_install:
-          requires:
-            - build_base
+    rebuild:
+      jobs:
+        - build_base
+        - asdf_install:
+            requires:
+              - build_base
   unless: << pipeline.parameters.rebuild-image >>
-  install:
-    jobs:
-      - asdf_install
+    install:
+      jobs:
+        - asdf_install
