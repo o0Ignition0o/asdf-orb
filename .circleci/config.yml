@@ -41,13 +41,9 @@ jobs:
 
       - run:
           command: |
-            pwd
-            ls -al /root/.asdf/bin
-            echo 'export PATH=/root/.asdf/bin:$PATH' >> $BASH_ENV
+            echo "$SHELL"
             source $BASH_ENV
-            echo $PATH
-            echo $BASH_ENV
-            cat $BASH_ENV
+            asdf --version
             asdf-install-plugins
             asdf-install-versions
 
