@@ -21,9 +21,9 @@ jobs:
             docker save -o /caches/asdf.tar asdf
       - run:
           command: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker image tag jeremylempereur/asdf:latest asdf:latest
-          docker push jeremylempereur/asdf:latest
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker image tag jeremylempereur/asdf:latest asdf:latest
+            docker push jeremylempereur/asdf:latest
 
       - save_cache:
           key: v1-docker-base-cache-{{ checksum "Dockerfile" }}
