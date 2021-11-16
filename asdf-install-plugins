@@ -4,20 +4,6 @@ if [ ! -f .tool-versions ]; then
   exit 1
 fi
 
-cat ~/.bashrc
-
-ls -al /root
-ls -al /root/.asdf
-ls -al /root/.asdf/bin
-
-
-ASDF = "/root/.asdf/bin/asdf"
-if [ -f "$ASDF" ]; then
-  echo "asdf not found!"
-  exit 1
-fi
-echo "using asdf located in $ASDF"
-
 cat .tool-versions | awk '{print $1}' | while read -r plugin; do
   if [ -z "$plugin" ]; then
     continue
@@ -28,7 +14,7 @@ cat .tool-versions | awk '{print $1}' | while read -r plugin; do
     echo "$plugin is already installed. Skipping"
   else
     echo "Installing $plugin"
-    $ASDF plugin-add $plugin
+    /root/.asdf/bin/asdf plugin-add $plugin
     ex=$?
     if [ $ex -eq 2 ] || [ $ex -eq 0 ]; then
       echo "Successfully installed $plugin"
