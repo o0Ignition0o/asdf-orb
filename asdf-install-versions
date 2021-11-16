@@ -5,6 +5,10 @@ if [ ! -f .tool-versions ]; then
 fi
 
 cat .tool-versions | while read -r version; do
+  if [ -z "$version" ]; then
+    continue
+  fi
+
   ret=$(asdf where $version)
   ex=$?
   if [ $ex -eq 0 ]; then
