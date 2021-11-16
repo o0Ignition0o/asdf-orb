@@ -4,6 +4,13 @@ if [ ! -f .tool-versions ]; then
   exit 1
 fi
 
+cat ~/.bashrc
+
+ls -al /root
+ls -al /root/.asdf
+ls -al /root/.asdf/bin
+
+
 ASDF = "/root/.asdf/bin/asdf"
 if [ -f "$ASDF" ]; then
   echo "asdf not found!"
