@@ -32,15 +32,15 @@ jobs:
   asdf_install:
     docker:
       - image: jeremylempereur/asdf:latest
-        environment:
-          BASH_ENV: "~/.bashrc"
     steps:
       - checkout
       - restore_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
-
-      - run: /asdf-install-plugins
-      - run: /asdf-install-versions
+      - run:
+        command: |
+          source ~/.bashrc
+          /asdf-install-plugins
+          /asdf-install-versions
 
       - save_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
