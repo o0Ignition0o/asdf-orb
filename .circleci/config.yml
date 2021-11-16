@@ -1,4 +1,8 @@
 version: 2.1
+parameters:
+  rebuild:
+    type: boolean
+    default: false
 jobs:
   build_base:
     docker:
