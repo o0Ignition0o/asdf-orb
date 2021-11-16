@@ -31,14 +31,14 @@ jobs:
             - /caches/asdf-base.tar
   asdf_install:
     docker:
-      - image: jeremylempereur/asdf
+      - image: jeremylempereur/asdf:latest
     steps:
       - checkout
       - restore_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
 
-      - run: asdf-install-plugins
-      - run: asdf-install-versions
+      - run: /asdf-install-plugins
+      - run: /asdf-install-versions
 
       - save_cache:
           key: v1-tools-cache-{{ checksum ".tool-versions" }}
