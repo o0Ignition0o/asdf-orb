@@ -33,7 +33,7 @@ jobs:
     docker:
       - image: jeremylempereur/asdf:latest
         environment:
-          shell: /bin/bash -i
+          shell: /bin/bash -eo pipefail -l
           BASH_ENV: "/root/.bashrc"
     steps:
       - checkout
