@@ -16,4 +16,4 @@ COPY asdf-install-plugins /bin/
 COPY asdf-install-versions /bin/
 
 # This is required to source bashrc correctly
-CMD ["bash"]
+CMD ["/bin/bash", "-i", "-c"]
